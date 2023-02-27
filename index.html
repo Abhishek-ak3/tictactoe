@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tic toeee</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        ul li {
+            list-style: none;
+            font-size: 20px;
+            padding: 15px;
+        }
+
+        header {
+            background-color: red;
+            color: white;
+
+        }
+
+        .container {
+            display: grid;
+            margin: 20px;
+            grid-template-rows: repeat(3, 10vw);
+            grid-template-columns: repeat(3, 10vw);
+
+        }
+
+        .box {
+            border: 3px solid black;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 30px;
+        }
+
+        .bt-0 {
+            border-top: 0;
+        }
+
+        .bb-0 {
+            border-bottom: 0;
+        }
+
+        .bl-0 {
+            border-left: 0;
+        }
+
+        .br-0 {
+            border-right: 0;
+        }
+
+        .items {
+            display: flex;
+
+        }
+
+        .container2 {
+            /* margin: 30px 80px; */
+            margin: 20px auto;
+        }
+        .textbox{
+            font-size: 25px;
+        }
+
+        .container2 img{
+            width: 0;
+        }
+
+        .btn{
+            background-color: black;
+            color: white;
+            padding: 15px;
+            margin: 5px;
+            border-radius: 20px;
+        }
+
+        @media  screen and (max-width:430px) {
+            .items{
+                flex-direction: column;
+            }
+            .container {
+            
+            grid-template-rows: repeat(3, 20vw);
+            grid-template-columns: repeat(3, 20vw);
+            justify-content: center;
+            /* align-items: center; */
+            text-align: center;
+
+        }
+
+        .container2{
+            margin: 20px auto;
+        }
+
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li>Welcome To Tic Tac Toe</li>
+            </ul>
+        </nav>
+    </header>
+    <div class="items">
+
+
+
+        <div class="container">
+            <div class="box bt-0 bl-0"> <span class="textbox"></span> </div>
+            <div class="box bt-0"> <span class="textbox"></span></div>
+            <div class="box bt-0 br-0"> <span class="textbox"></span></div>
+            <div class="box bl-0"><span class="textbox"></span> </div>
+            <div class="box"><span class="textbox"></span> </div>
+            <div class="box br-0"><span class="textbox"></span> </div>
+            <div class="box bl-0 bb-0"> <span class="textbox"></span></div>
+            <div class="box bb-0"><span class="textbox"></span> </div>
+            <div class="box bb-0 br-0"> <span class="textbox"></span></div>
+        </div>
+
+        <div class="container2">
+            <h2>Game Status</h2>
+            <button class="btn" onclick="reset()">RESET</button>
+            <img src="D:\excited.gif" alt="">
+        </div>
+
+
+    </div>
+
+    <script>
+        let initturn = "X";
+        let tune=new Audio('ting.mp3')
+        let end=new Audio('music.mp3')
+
+        const reset=()=>{
+            let boxtexxt = document.querySelectorAll('.textbox');
+            console.log(boxtexxt)
+            boxtexxt.forEach(v=>{
+                v.innerText=""
+            })
+            document.querySelector('img').style.width="0px";
+end.pause();
+        }
+
+        const changeTurn=()=>{
+            return   initturn==='X' ?'0':'X'
+        }
+        const checkWin=()=>{
+            let boxtexxt = document.getElementsByClassName('textbox');
+             let wins=[
+                [0,1,2],
+                [3,4,5],
+                [6,7,8],
+                [0,4,8],
+                [2,4,6],
+                [0,3,6],
+                [1,4,7],
+                [2,5,8]
+             ]
+             wins.forEach(v=>{
+                if((boxtexxt[v[0]].innerText===boxtexxt[v[1]].innerText) && (boxtexxt[v[1]].innerText===boxtexxt[v[2]].innerText) && (boxtexxt[v[0]].innerText !=="" )) {
+                  document.querySelector('img').style.width="200px";
+                  end.play();
+                  
+                }
+             })
+        }
+
+        let boxes = document.getElementsByClassName('box');
+        Array.from(boxes).forEach(v => {
+            let boxtexxt = v.querySelector('.textbox');
+            v.addEventListener('click',()=>{
+                if(boxtexxt.innerText===""){
+                    boxtexxt.innerText=initturn;
+                    initturn= changeTurn();
+                    checkWin();
+                    tune.play();
+                }
+            })
+
+        })
+
+    </script>
+</body>
+
+</html>
